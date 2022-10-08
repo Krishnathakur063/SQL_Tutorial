@@ -276,3 +276,8 @@ WHERE CustomerName LIKE '%_r%' ==> Finds any values that have "r" in the second 
 
 WHERE CustomerName LIKE '%a_%' ==> Finds any values that start with "a" and are atleast 2 character in length.
 
+WHERE CustomerName LIKE '%a__%' ==> Finds any values that start with "a" and are atleast 3 character in length.
+
+WHERE ContactName LIKE 'a%o' ==> Finds any values that start with "a" and  ends with "o".
+
+
