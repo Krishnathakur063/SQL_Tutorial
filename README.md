@@ -1,12 +1,12 @@
-#************SQL Tutorial******************
+# ************SQL Tutorial******************
 
-##************ 0 - Creating Database******************
+## ************ 0 - Creating Database******************
 
 ==> It is used to Creaating a Database.
 
 ==> CREATE DATABASE Demo_DB;
 
-#************ 1 - Creating Table******************
+# ************ 1 - Creating Table******************
 
 ==> It is used to create a Table.
 
@@ -19,7 +19,7 @@ create table Demo_DB.Hello
     salary int
 );
 
-##************ 2 - Inserting Data into Table******************
+## ************ 2 - Inserting Data into Table******************
 
 ==> It is used to Insert the value in Table.
 
@@ -46,7 +46,7 @@ values(1, 'Krishna','Thakur','Hathras', 10000);
 insert into Demo_DB.Hello(personid, firstname, lastname, city, salary) 
 values(1, 'Krishna','Thakur','Hathras', 12000);
 
-##************ 3 - AND & OR Operator******************
+## ************ 3 - AND & OR Operator******************
 
 SELECT * from Demo_DB.hello where firstname = "Krishna" AND lastname = "Thakur";
 
@@ -55,12 +55,12 @@ Select * from Demo_DB.hello where firstname = "Krishna" OR lastname = "Sharma";
 Select * from Demo_DB.hello where firstname = "Krishna" OR lastname = "Sharma";
 
 
-##************ 4- Where Clause******************
+## ************ 4- Where Clause******************
 
 select * from Demo_DB.Hello where PersonID = 3;
 
 
-##************ 5 - ORDER BY *****************
+## ************ 5 - ORDER BY *****************
 
 ==> By default sort in Ascending order we can also use 'DESC' keyword to sort in Descending order.
 
@@ -71,20 +71,20 @@ Select * from Demo_DB.Hello order by salary;
 Select * from Demo_DB.Hello order by salary DESC;
 
 
-##************ 6 - Distinct Statement *****************
+## ************ 6 - Distinct Statement *****************
 
 ==> It  is used to print the original value. It removes the duplicate value from columns
 
 Select distinct(firstname) from Demo_DB.Hello;
 
 
-##************ 7 - Delete Statement *****************
+## ************ 7 - Delete Statement *****************
 
 ==> Delete Statement is used to delete the rows in a Table.
 
 Note:- If you don't write the 'Where' Clause, All the records will be deleted.
 
-# SET SQL_SAFE_UPDATES = 0; // This command is used when Sql gives an error 1175. You are using safe update.
+### SET SQL_SAFE_UPDATES = 0; // This command is used when Sql gives an error 1175. You are using safe update.
 
 delete from Demo_DB.Hello where PersonID = 1 AND firstname = "Mohit";
 
@@ -96,11 +96,11 @@ After this we can simply use simple command without database name.
 
 Select * from Hello;
 
-##************ 8 - Date Time *****************
+## ************ 8 - Date Time *****************
 
 Select now(), curdate(), curtime();
 
-##************ 9 - Date Time *****************
+## ************ 9 - Date Time *****************
 
 AVG():- Select AVG(column_name) from table_name;
 
@@ -143,7 +143,7 @@ Select SUM(Salary) from hello;
 Select SUM(Salary) from hello where salary > 10000;
 
 
-##************ 10 - GROUP BY Statement *****************
+## ************ 10 - GROUP BY Statement *****************
 
 ==> GROUP BY Statement is used in conjunction with aggregate functions (Above Function in 9 points all are aggregate function) to group the result set by one or more columns.
 
@@ -188,7 +188,7 @@ select * from orders;
 	==> select customer, count(order_price) from orders group by customer;
 
 
-##************ 11 - HAVING Clause *****************
+## ************ 11 - HAVING Clause *****************
 
 ==> The HAVING clause was added to SQL because the WHERE keyword cannot be used with 
 aggregate functions.
@@ -200,7 +200,7 @@ Usage ==> Select Customer Sum(order_price) from orders group by Customer Having 
 
 select customer, sum(order_price) from orders group by customer having sum(order_price) > 2000;
 
-##************ 12 - ALTER TABLE STATEMENT *****************
+## ************ 12 - ALTER TABLE STATEMENT *****************
 
 ALTER TABLE statement is used to add, delete, or modify columns in existing table.
 
@@ -217,7 +217,7 @@ Usage ==>1:- alter table orders add location varchar(255);
 3:- alter table orders modify column order_price int;
 
 
-##************ 13 - ALIAS *****************
+## ************ 13 - ALIAS *****************
 
 SQL ALIAS :- You can give a table or a column another name by using an alias. It is a temporary name.
 
@@ -226,7 +226,7 @@ USAGE==> Select Column_name as alias_name from table_name;
 		select customer as customer_name from orders;	
 
 
-##************ 14 - DROP *****************
+## ************ 14 - DROP *****************
 
 SQL DROP DATABASE :- The DROP DATABASE Statement is used to drop an existing SQL Database.
 
@@ -241,7 +241,7 @@ USAGE:- 1:- DROP DATABASE Database_name;
 	drop database Demo_DB;
 
 
-##************ 15 - Between Operator *****************
+## ************ 15 - Between Operator *****************
 
 Ther BETWEEN Operator is used in a WHERE Clause to select a range of data between two values. Begin and end value are included.
 
@@ -249,7 +249,7 @@ SELECT * FROM Products WHERE Price BETWEEN 10 and 20
 
 select * from orders where order_price between 1000 and 2500;
 
-##************ 16 - IN Operator *****************
+## ************ 16 - IN Operator *****************
 
 IN Operator allows you to specify multiple values in a WHERE Clause. The number of values in
 the parenthesis can be one or more, with each values seperated by commas.
@@ -262,7 +262,7 @@ select * from orders where customer in ("John", "Brown");
 select order_price, customer from orders where customer in ("John", "Brown");
 
 
-##************ 16 - SQL LIKE Operator *****************
+## ************ 17 - SQL LIKE Operator *****************
 
 THE SQL LIKE Operator is used in a WHERE Clause to search for a specified Pattern in a column.
 
