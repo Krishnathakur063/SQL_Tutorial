@@ -280,4 +280,12 @@ WHERE CustomerName LIKE '%a__%' ==> Finds any values that start with "a" and are
 
 WHERE ContactName LIKE 'a%o' ==> Finds any values that start with "a" and  ends with "o".
 
+USAGE ==> 1:- select * from orders where customer like "j%";
+
+2:- select * from orders where customer like "%n";
+
+3:- select * from orders where customer like "%ow%";
+
+## ************ 18 - TRUNCATE Command *****************
+
 
