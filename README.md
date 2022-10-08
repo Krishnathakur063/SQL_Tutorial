@@ -6,7 +6,7 @@
 
 ==> CREATE DATABASE Demo_DB;
 
-# ************ 1 - Creating Table******************
+## ************ 1 - Creating Table******************
 
 ==> It is used to create a Table.
 
