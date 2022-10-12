@@ -288,4 +288,321 @@ USAGE ==> 1:- select * from orders where customer like "j%";
 
 ## ************ 18 - TRUNCATE Command *****************
 
+The SQL TRUNCATE TABLE command is used to delete complete data from an existing table.
+
+	TRUNCATE TABLE table_name;
+
+Usage ==> truncate table orders;	
+
+## ************ 19 - UPDATE Command *****************
+
+The UPDATE statement is used to update records in a table 
+
+	UPDATE table_name SET column1= value1, column2= value2 WHERE Condition;
+
+Usage:- 1:- Update Customers SET ContactName= 'Juan' WHERE Country='Mexico';
+
+2:- update orders
+set order_price=1100
+where order_id = 4;
+
+
+## ************ 20 - CONSTRAINT *****************
+
+SQL CONSTRAINT are used to specify rules for the data in a table.
+
+NOT NULL:- Ensure that a column cannot have a NULL value.
+
+UNIQUE:- Ensure that all values in a column are different.
+
+PRIMARY KEY:- A combination of a NOT NULL and UNIQUE. Uniquely identifies each row in a table.
+
+FOREIGN KEY:- Prevent actions that would destroy links between tables.
+
+CHECK:- Ensures that the  values in a  column satisfies a specific condition.
+
+DEFAULT:- Sets a default value for a column if no value is specified.
+
+## ************ 21 - NOT NULL *****************
+
+By Default a table column can hold NULL Values. The NOT NULL Constraint enforces a column to NOT accept NULL values.
+
+CREATE TABLE Persons(
+ID int NOT NULL,
+LastName varchar(255) NOT NULL,
+FirstName varchar(255) NOT NULL,
+Age int
+);
+
+Usage:- insert into persons(lastname, firstname) values('Krishna', 'Thakur'); ==> This throws an error 1364. Field Id doesn't have default value.
+
+insert into persons(id, lastname, firstname) values(1,'Krishna', 'Thakur'); ==> This works perfectly fine.
+
+==> drop table Persons; ==> To delete persons table.
+
+## ************ 22 - SQL UNIQUE CONSTRAINT*****************
+
+The UNIQUE constraint ensures that all values in a column are different.
+
+CREATE TABLE Persons(
+ID int NOT NULL UNIQUE ,
+LastName varchar(255) NOT NULL,
+FirstName varchar(255),
+Age int
+);
+
+insert into persons(id, lastname, firstname) values(1,'Krishna', 'Thakur');
+
+select * from Persons;
+
+insert into persons(id, lastname, firstname) values(1,'Krishna', 'Thakur');
+
+Note:- If we again insert the value with same id then it will not allow to add duplicate value into table. It throws an error code 1062. Duplicate entry '1' for key 'Persons.ID'.
+So we have to change the ID value.
+
+insert into persons(id, lastname, firstname) values(2,'Krishna', 'Thakur');
+
+## ************ 23 - SQL CHECK CONSTRAINT*****************
+
+The CHECK constraint is used to limit the value range that can be placed in a column.
+
+If you define a CHECK constraint on a column it will allow only certain value for this column.
+
+CREATE TABLE Persons(
+ID int NOT NULL,
+LastName varchar(255) NOT NULL,
+FirstName varchar(255),
+Age int,
+CHECK (Age>=18)
+);
+
+insert into persons(id, lastname, firstname, age) values(2,'Krishna', 'Thakur', 12); 
+
+The above command will throw an Error Code: 3819. Check constraint 'persons_chk_1' is violated. because we insert age 12 which is less than 18 which is not allowed.
+
+So to remove this error we have to insert age greater than or equal to 18.
+
+insert into persons(id, lastname, firstname, age) values(2,'Krishna', 'Thakur', 28); 
+
+
+## ************ 24 - PRIMARY KEY (Unique + Not NULL)*****************
+
+The PRIMARY KEY constraint uniquely identifies each record in a table.
+PRIMARY KEY must contain UNIQUE values, and cannot contain NULL values.
+A table can have only ONE Primary key.
+
+CREATE TABLE Persons(
+ID int NOT NULL,
+LastName varchar(255) NOT NULL,
+FirstName varchar(255),
+Age int,
+PRIMARY KEY (ID)
+);
+
+
+		-- Creating a Primary Key --
+
+			create table orders(
+			order_id int primary key,
+			order_number int,
+			location varchar(255)
+			);
+
+			insert into orders(order_id, order_number, location) values(1, 100, 'Delhi');
+
+			insert into orders(order_id, order_number, location) values(2, 101, 'Gurgaon');
+
+			insert into orders(order_id, order_number, location) values(3, 102, 'Noida');
+
+			select * from orders;
+
+
+## ************ 25 - FOREIGN KEY *****************
+
+The FOREIGN KEY constraint is used to prevent actions that would destroy links between tables.
+A FOREIGN KEY is a field (or collection of fields) in one table, that refers to the PRIMARY KEY in another table.
+The table with the foreign key is called the child table, and the table with the primary key is called the referenced or parent table.
+
+CREATE TABLE Orders(
+ OrderID int NOT NULL,
+ OrderNumber int NOT NULL,
+ PersonID int,
+ PRIMARY KEY(OrderID),
+ FOREIGN KEY(PersonID) REFERENCES Persons(PersonID)
+);
+
+
+
+		-- Creating a Foreign Key --
+
+		create table Person(
+		person_id int,
+		person_name varchar(255),
+		order_id int,
+		foreign key(order_id) references orders(order_id)
+
+		);
+
+		insert into Person(person_id, person_name, order_id) values(10, 'Krishna', 10);
+
+		The above insert command will thrown an error.
+		Error Code: 1452. Cannot add or update a child row: a foreign key constraint fails (`demo_db`.`person`, CONSTRAINT `person_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`)). 
+		
+		Because the Order_Id value is different from the parent table(orders table). To remove this error we have to keep the order_id value same as orders table.
+
+		insert into Person(person_id, person_name, order_id) values(10, 'Krishna', 1);
+
+		Now it will works perfectly fine.
+
+Important Point about Primary key  and Foreign Key:-
+
+1. A Table can have only one primary key (unique + not null).
+2. Foreign key - To make relationship between two or more than two tables .
+3. One table contain primary key and other table contain foreign key.
+4. A common column in both the tables (common column should have same datatype).
+5. Primary key(parent table) + Foreign key(child table).
+
+## ************ 26 - DEFAULT Constraint *****************
+
+The DEFAULT constraint is used to set a default value for a column.
+
+The default value will be added to all new records, if no other value is specified.
+
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    City varchar(255) DEFAULT 'Delhi'
+);
+
+insert into Persons(ID, LastName, FirstName, Age, City) values (1,'Thakur','Krishna',28,'Noida');
+
+select * from persons;
+
+insert into Persons(ID, LastName, FirstName, Age) values (2,'Thakur','Krishna',28);
+
+The above insert command will update the city value Delhi by default.
+
+
+The DEFAULT constraint can also be used to insert system values, by using functions like CURRENT_DATE():
+
+CREATE TABLE Orders (
+    ID int NOT NULL,
+    OrderNumber int NOT NULL,
+    OrderDate date DEFAULT CURRENT_DATE()
+);
+
+
+** DEFAULT on ALTER TABLE
+	To create a DEFAULT constraint on the "City" column when the table is already created, use the following SQL:
+
+		ALTER TABLE Persons
+		ALTER City SET DEFAULT 'Sandnes';
+
+** DROP a DEFAULT Constraint
+
+To drop a DEFAULT constraint, use the following SQL:
+
+	ALTER TABLE Persons
+	ALTER City DROP DEFAULT;
+
+
+## ************ 27 - JOIN Operation *****************
+
+A JOIN clause is used to combine rows from two or more tables based on a related column between them.
+
+INNER JOIN/JOIN:- Return rows that have matching values in both tables.
+
+LEFT JOIN:- Return all Rows from the left table, even if there are no matches in right table.
+
+RIGHT JOIN:- Return all Rows from the Right table, even if there are no matches in the left table.
+
+FULL JOIN:- Return rows when there is a match in one of the tables.
+
+SELF JOIN:- A self join is a regular join, but the table is joined with itself.
+
+CROSS JOIN:- The CROSS JOIN keyword returns all records from both tables (table1 and table2).
+
+
+## ************  INNER JOIN Operation *****************
+
+Usage:- Select table1.column1, table2.column2... FROM table1 INNER JOIN table2 ON
+table1.common_field = table2.common_field;
+
+For Example:- select orders.person_id, persons.firstname, persons.lastname, orders.order_number from persons inner join
+orders on persons.person_id = orders.person_id;
+
+## ************  LEFT JOIN Operation *****************
+
+select persons.firstname, persons.lastname, orders.order_number, orders.person_id from persons left join
+orders on persons.person_id = orders.person_id;
+
+## ************  RIGHT JOIN Operation *****************
+
+select persons.firstname, persons.lastname, orders.order_number, orders.person_id from persons right join
+orders on persons.person_id = orders.person_id;
+
+
+## ************ 28 - INCREMENT *****************
+
+
+Auto Increment allows a unique number to be generated when a new record is inserted into a
+table.
+
+Usate:- CREATE TABLE Persons(
+ Person_ID NOT NULL auto_increment,
+ LastName varchar(255) NOT NULL,
+ FirstName varchar(255),
+ Age int,
+ PRIMARY KEY(Person_ID)
+);
+
+
+create table hello(
+person_id int primary key auto_increment,
+personname varchar(255),
+salary int
+);
+
+insert into hello(personname, salary) values('Krishna Thakur', 12000);
+insert into hello(personname, salary) values('Mohit Thakur', 10000);
+insert into hello(personname, salary) values('Mohit Sharma', 9000);
+insert into hello(personname, salary) values('Aashish Thakur', 11000);
+insert into hello(personname, salary) values('Ashish Thakur', 15000);
+
+select * from hello;
+
+
+## ************ 29 - TOP CLAUSE *****************
+
+TOP Clause is used to specify the number of record to return.
+
+Usage:- Select * from person limit 5;
+
+
+## ************ SQL Command *****************
+
+DDL:- Data Definition Language
+
+DQL:- Data Query Language
+
+DML:- Data Manipulation Language
+
+DCL:- Data Control Language
+
+TCL:- Transaction Control Language
+
+------------------------------------------
+
+DDL:- CREATE, DROP, ALTER, TRUNCATE
+
+DML:- INSERT, DELETE, UPDATE
+
+DQL:- SELECT
+
+TCL:- COMMIT, SAVEPOINT, ROLLBACK
+
+DCL:- GRANT, REVOKE
+
 
